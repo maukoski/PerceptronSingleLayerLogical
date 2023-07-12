@@ -7,7 +7,7 @@ import java.util.LinkedList;
  * the data and performs calculations of the function to check the activation.
  *
  * @author William Xavier Maukoski
- * @version 1.0
+ * @version 1.0.0.1
  */
 public class NeuronLayer {
 
@@ -55,6 +55,7 @@ public class NeuronLayer {
         this.dataBases.add(new DataBase(1, 1, 1, 1));
 
         // Initializing the list of neurons
+        //Refactor, changing the creation of neurons to something more elegant.
         for (int i = 0; i < neuronCount; i++) {
             this.neurons.add(new Neuron(0));
         }
@@ -67,6 +68,7 @@ public class NeuronLayer {
      */
     public void startProcess() {
         boolean flag = false;
+        //while flag is false, keep executating
         while (!flag) {
             this.epoch++;
             this.results = new LinkedList<>();
@@ -87,6 +89,7 @@ public class NeuronLayer {
                     i++;
                 }
                 double error = this.errorCalculation(i);
+                //Refactor, changing it to something more elegant.
                 this.neurons.get(0).updateWeight(this.learningRate, error, this.dataBases.get(i).getData()[2]);
                 this.neurons.get(1).updateWeight(this.learningRate, error, this.dataBases.get(i).getData()[2]);
                 this.neurons.get(2).updateWeight(this.learningRate, error, this.dataBases.get(i).getData()[2]);

@@ -11,6 +11,7 @@ package Model;
 public class DataBase {
     private double[]  data;
 
+    //Refatorar esta  classe
     public DataBase(int a, int b, int c, int d) {
         data = new double[4];
         data[0] = a;
