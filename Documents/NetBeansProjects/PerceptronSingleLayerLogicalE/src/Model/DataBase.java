@@ -30,7 +30,7 @@ public class DataBase {
         }
     }
 
-    public double[][] getData() {
+    public int[][] getData() {
         return data;
     }
 
