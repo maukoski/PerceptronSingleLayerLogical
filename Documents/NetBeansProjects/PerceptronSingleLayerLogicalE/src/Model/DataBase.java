@@ -9,22 +9,29 @@ package Model;
  * @author William
  */
 public class DataBase {
-    private double[]  data;
+
+    private int[][] data;
 
     //Refatorar esta  classe
-    public DataBase(int a, int b, int c, int d) {
-        data = new double[4];
-        data[0] = a;
-        data[1] = b;
-        data[2] = c;
-        data[3] = d;
+    public DataBase(int premiseCount, int[] conclusion) {
+        this.data = new int[premiseCount][(int) Math.pow(2, premiseCount)];
+        for (int i = 0; i < premiseCount; i++) {
+            for (int j = 0; j < premiseCount; j++) {
+                data[i][j] = 0;
+            }
+        }
     }
 
-    public double[] getData() {
+    public void showData() {
+        for (int i = 0; i < data.length; i++) {
+            for (int j = 0; j < data[i].length; j++) {
+                System.out.println("" + data[i][j]);
+            }
+        }
+    }
+
+    public double[][] getData() {
         return data;
     }
-    
-       
-    
-    
+
 }

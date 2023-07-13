@@ -4,6 +4,7 @@
  */
 package Controller;
 
+import Model.DataBase;
 import Model.NeuronLayer;
 
 
@@ -18,10 +19,12 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        NeuronLayer nl = new NeuronLayer(3, 80, 0.1);
+        /*NeuronLayer nl = new NeuronLayer(3, 80, 0.1);
         nl.startProcess();
         nl.showResult();
-        nl.accuracyCalculation();
+        nl.accuracyCalculation();*/
+        DataBase db = new DataBase(2, new int[2]);
+        db.showData();
     }
     
 }
