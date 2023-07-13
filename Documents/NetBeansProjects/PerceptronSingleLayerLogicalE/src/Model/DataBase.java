@@ -11,10 +11,13 @@ package Model;
 public class DataBase {
 
     private int[][] data;
-
-    //Refatorar esta  classe
+    private int[] conclusion;
+    
+//Refatorar esta  classe
     public DataBase(int premiseCount, int[] conclusion) {
         this.data = new int[(int) Math.pow(2, premiseCount)][premiseCount];
+        this.conclusion = conclusion;
+        
         this.fillValues();
     }
 
@@ -31,7 +34,11 @@ public class DataBase {
         return data;
     }
 
-    private void fillValues() {
+    public int[] getConclusion() {
+        return conclusion;
+    }
+    
+        private void fillValues() {
         int numRows = data.length;
         int numCols = data[0].length;
 
