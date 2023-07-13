@@ -23,7 +23,7 @@ public class Main {
         nl.startProcess();
         nl.showResult();
         nl.accuracyCalculation();*/
-        DataBase db = new DataBase(2, new int[2]);
+        DataBase db = new DataBase(3, new int[3]);
         db.showData();
     }
     
