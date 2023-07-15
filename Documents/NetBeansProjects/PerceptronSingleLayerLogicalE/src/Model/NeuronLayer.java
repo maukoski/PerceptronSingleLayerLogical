@@ -13,7 +13,7 @@ public class NeuronLayer {
 
     private LinkedList<Neuron> neurons; // Linked list of neurons.
     private static double learningRate = 0.1; // Learning rate.
-    private LinkedList<DataBase> dataBases; // Linked list of data.
+    private DataBase dataBases; // Linked list of data.
     private LinkedList<Integer> results;    // Stores the network's predictions for each record.
     private double accuracyTarget;  // Minimum accuracy to stop execution.
     private boolean[] equalresults; // List of hits and misses of the neural network.
@@ -29,7 +29,7 @@ public class NeuronLayer {
      * @throws IllegalArgumentException If the minimum accuracy is less than
      * zero.
      */
-    public NeuronLayer(int neuronCount, double accuracyTarget, double learningRate) {
+    public NeuronLayer(int neuronCount, double accuracyTarget, double learningRate, DataBase db) {
         if (neuronCount <= 0) {
             throw new IllegalArgumentException("The number of neurons in a layer always must be a positive number");
         }
@@ -42,17 +42,9 @@ public class NeuronLayer {
         this.accuracyTarget = accuracyTarget;
         this.learningRate = learningRate;
 
-        this.dataBases = new LinkedList<DataBase>();
         this.neurons = new LinkedList<Neuron>();
 
-        this.dataBases.add(new DataBase(0, 0, 0, 0));
-        this.dataBases.add(new DataBase(0, 0, 0, 0));
-        this.dataBases.add(new DataBase(0, 0, 1, 1));
-        this.dataBases.add(new DataBase(0, 0, 1, 1));
-        this.dataBases.add(new DataBase(1, 1, 0, 1));
-        this.dataBases.add(new DataBase(1, 1, 0, 1));
-        this.dataBases.add(new DataBase(1, 1, 1, 1));
-        this.dataBases.add(new DataBase(1, 1, 1, 1));
+        this.dataBases = db;
 
         // Initializing the list of neurons
         //Refactor, changing the creation of neurons to something more elegant.
