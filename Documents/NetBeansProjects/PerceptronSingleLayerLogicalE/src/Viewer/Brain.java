@@ -27,9 +27,8 @@ public class Brain {
 
         conclusion[3] = 1;
 
-        this.db = new DataBase(this.numInputs, conclusion);
+        this.db = new DataBase(this.numInputs, "and");
         this.ol = new OutPutLayer(this.numInputs, this.minimumAccuracy, this.learningRate, db);
-
     }
     
     public void startProcess(){

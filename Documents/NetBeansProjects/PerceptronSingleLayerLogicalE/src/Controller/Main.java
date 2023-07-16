@@ -4,8 +4,6 @@
  */
 package Controller;
 
-import Model.DataBase;
-import Model.OutPutLayer;
 import Viewer.Brain;
 
 /**
@@ -20,6 +18,7 @@ public class Main {
     public static void main(String[] args) {
      Brain brain = new Brain(2,100,0.1);
      brain.startProcess();
+     brain.printTable();
     }
 
 }

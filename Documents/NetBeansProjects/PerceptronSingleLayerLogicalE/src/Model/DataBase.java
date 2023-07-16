@@ -14,11 +14,12 @@ public class DataBase {
     private int[] conclusion;
 
 //Refatorar esta  classe
-    public DataBase(int premiseCount, int[] conclusion) {
+    public DataBase(int premiseCount, String logicalOperation) {
         this.data = new int[(int) Math.pow(2, premiseCount)][premiseCount];
-        this.conclusion = conclusion;
+        this.conclusion = new int[(int) Math.pow(2, premiseCount)];
 
         this.fillValues();
+        this.fillConclusion(logicalOperation);
     }
 
     public void printData() {
@@ -68,5 +69,20 @@ public class DataBase {
                 data[row][col] = (row / period) % 2;  // fill the column with repeating 0s and 1s
             }
         }
+    }
+    
+    
+    private void fillConclusion(String logicalOperation){
+
+        if(logicalOperation.toUpperCase().equals("OR")){
+            for(int i = 1; i < this.conclusion.length; i++){
+                this.conclusion[i] = 1;
+            }
+        }
+        
+       if(logicalOperation.toUpperCase().equals("AND")){
+            this.conclusion[this.conclusion.length -1] = 1;
+        }
+         
     }
 }
