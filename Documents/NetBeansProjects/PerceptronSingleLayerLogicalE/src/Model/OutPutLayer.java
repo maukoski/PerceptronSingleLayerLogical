@@ -68,11 +68,11 @@ public class OutPutLayer {
             this.equalsResultInitializing();
 
             for (int[] data : dataBases.getData()) {//Access each row of the truth table.
+                this.inputlayer = new LinkedList<>(); //Reset the inputs for the next line of truth table.
                 for (int i = 0; i < this.inputlayer.size(); i++) {//Access the elements of the current row of the truth table.
                     this.inputlayer.get(i).setInput(data[i]); //The current element of the truth table is set as an input to the neuron.
                 }
                 results.add(this.activation()); //Checks if there is activation and saves in the vector used to compare with the expected answers.
-
             }
 
             if (this.accuracyCalculation() >= this.accuracyTarget) {
@@ -83,8 +83,6 @@ public class OutPutLayer {
                     i++;
                 }
                 double error = this.errorCalculation(i);
-                //Refactor, changing it to something more elegant.
-
                 //The section that will recalculate the weights.
                 for (InputLayer input : this.inputlayer) {
                     input.updateWeight(this.learningRate, error, input.getInput());
