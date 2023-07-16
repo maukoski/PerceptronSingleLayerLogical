@@ -51,4 +51,7 @@ public class Neuron {
         this.weight = this.weight + (learningRate * error * input);
     }
 
+    public double getInput() {
+        return input;
+    }
 }
