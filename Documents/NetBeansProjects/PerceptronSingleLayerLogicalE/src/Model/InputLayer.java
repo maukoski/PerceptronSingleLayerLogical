@@ -12,12 +12,12 @@ package Model;
  * @author William Xavier Maukoski
  * @version 1.0
  */
-public class Neuron {
+public class InputLayer {
 
     private double input;
     private double weight;
 
-    public Neuron(double weight) {
+    public InputLayer(double InputLayer) {
         this.weight = weight;
     }
 
