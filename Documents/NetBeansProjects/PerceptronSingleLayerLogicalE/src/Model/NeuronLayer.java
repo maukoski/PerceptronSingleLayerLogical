@@ -9,7 +9,7 @@ import java.util.LinkedList;
  * @author William Xavier Maukoski
  * @version 1.0.0.1
  */
-public class NeuronLayer {
+public class OutPutLayer{
 
     private LinkedList<Neuron> neurons; // Linked list of neurons.
     private static double learningRate = 0.1; // Learning rate.
