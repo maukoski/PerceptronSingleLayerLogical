@@ -68,7 +68,7 @@ public class OutPutLayer {
 
             this.results.clear();
             for (int[] data : dataBases.getData()) {//Access each row of the truth table.
-                for (int i = 0; i < this.inputlayer.size(); i++) {//Access the elements of the current row of the truth table.
+                /*AQUI*/ for (int i = 0; i < this.inputlayer.size(); i++) {//Access the elements of the current row of the truth table.
                     this.inputlayer.get(i).setInput(data[i]); //The current element of the truth table is set as an input to the neuron.
                 }
                 results.add(this.activation()); //Checks if there is activation and saves in the vector used to compare with the expected answers.
@@ -82,15 +82,20 @@ public class OutPutLayer {
                     i++;
                 }
             } else {
+                int z = 0;
+                for (InputLayer input : this.inputlayer) {
+                    System.out.println("X" + z + ": " + input.getWeight());
+                    z++;
+                }
+
+                System.out.println("Acuracia obtida pela rede: " + this.accuracyCalculation() + "%");
+
                 int i = 0;
                 while (this.equalresults[i]) {
                     i++;
                 }
                 double error = this.errorCalculation(i);
                 //The section that will recalculate the weights.
-                for (InputLayer input : this.inputlayer) {
-                    input.updateWeight(this.learningRate, error, input.getInput());
-                }
 
                 for (int j = 0; j < this.dataBases.getData()[i].length; j++) {
                     this.inputlayer.get(j).updateWeight(this.learningRate, error, this.dataBases.getData()[i][j]);
@@ -100,13 +105,6 @@ public class OutPutLayer {
                 /*this.neurons.get(0).updateWeight(this.learningRate, error, this.dataBases.get(i).getData()[2]);
                 this.neurons.get(1).updateWeight(this.learningRate, error, this.dataBases.get(i).getData()[2]);
                 this.neurons.get(2).updateWeight(this.learningRate, error, this.dataBases.get(i).getData()[2]);*/
-                int z = 0;
-                for (InputLayer input : this.inputlayer) {
-                    System.out.print("X" + z + ": " + input.getWeight() + "  ");
-                    z++;
-                }
-
-                System.out.println("Acuracia obtida pela rede: " + this.accuracyCalculation() + "%");
             }
         }
 

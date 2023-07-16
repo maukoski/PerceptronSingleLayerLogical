@@ -17,21 +17,25 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        int[] conclusion = new int[128];
+        int[] conclusion = new int[4];
 
-        conclusion[127] = 1;
+       
+        conclusion[3] = 1;
+        conclusion[1] = 1;
+        conclusion[0] = 1;
+
         
         
                 
 
-        DataBase db = new DataBase(7, conclusion);
+        DataBase db = new DataBase(2, conclusion);
     
 
 
         db.printTable();
-        OutPutLayer ol = new OutPutLayer(7, 100, 0.01, db);
+        OutPutLayer ol = new OutPutLayer(2, 100, 0.1, db);
         ol.startProcess();
-        ol.showResult();
+       ol.showResult();
 
     }
 
