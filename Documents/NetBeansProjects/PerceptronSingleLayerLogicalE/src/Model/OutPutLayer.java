@@ -11,7 +11,7 @@ import java.util.LinkedList;
  */
 public class OutPutLayer {
 
-    private LinkedList<InputLayer >inputlayer; // Linked list of neurons.
+    private LinkedList<InputLayer> inputlayer; // Linked list of neurons.
     private static double learningRate; // Learning rate.
     private DataBase dataBases; // Linked list of data.
     private LinkedList<Integer> results;    // Stores the network's predictions for each record.
@@ -38,7 +38,7 @@ public class OutPutLayer {
             throw new IllegalArgumentException("The minimum accuracy of a single layer perceptron must be equal to or greater than zero");
         }
 
-        this.epoch = 0;
+        this.epoch = -1;
         this.accuracyTarget = accuracyTarget;
         this.learningRate = learningRate;
 
@@ -49,16 +49,15 @@ public class OutPutLayer {
         // Initializing the list of neurons
         //Refactor, changing the creation of neurons to something more elegant.
         for (int i = 0; i < neuronCount; i++) {
-            this.inputlayer.add(new InputLayer(0));
+            this.inputlayer.add(new InputLayer());
         }
-
     }
 
     /**
      * Method responsible for executing all the logic behind the network, it
      * will run until the minimum accuracy is obtained
      */
-    public void startProcess(){
+    public void startProcess() {
         boolean flag = false;
         //while flag is false, keep executating
         while (!flag) {
@@ -67,8 +66,8 @@ public class OutPutLayer {
             this.equalresults = new boolean[dataBases.getConclusion().length];
             this.equalsResultInitializing();
 
+            this.results.clear();
             for (int[] data : dataBases.getData()) {//Access each row of the truth table.
-                this.inputlayer = new LinkedList<>(); //Reset the inputs for the next line of truth table.
                 for (int i = 0; i < this.inputlayer.size(); i++) {//Access the elements of the current row of the truth table.
                     this.inputlayer.get(i).setInput(data[i]); //The current element of the truth table is set as an input to the neuron.
                 }
@@ -77,6 +76,11 @@ public class OutPutLayer {
 
             if (this.accuracyCalculation() >= this.accuracyTarget) {
                 flag = true;
+                int i = 0;
+                for (InputLayer input : this.inputlayer) {
+                    System.out.println("Peso da entrada X" + i + ": " + input.getWeight());
+                    i++;
+                }
             } else {
                 int i = 0;
                 while (this.equalresults[i]) {
@@ -88,12 +92,26 @@ public class OutPutLayer {
                     input.updateWeight(this.learningRate, error, input.getInput());
                 }
 
+                for (int j = 0; j < this.dataBases.getData()[i].length; j++) {
+                    this.inputlayer.get(j).updateWeight(this.learningRate, error, this.dataBases.getData()[i][j]);
+                }
+
+                //System.out.println("Acuracia: " + this.accuracyCalculation());
                 /*this.neurons.get(0).updateWeight(this.learningRate, error, this.dataBases.get(i).getData()[2]);
                 this.neurons.get(1).updateWeight(this.learningRate, error, this.dataBases.get(i).getData()[2]);
                 this.neurons.get(2).updateWeight(this.learningRate, error, this.dataBases.get(i).getData()[2]);*/
+                int z = 0;
+                for (InputLayer input : this.inputlayer) {
+                    System.out.print("X" + z + ": " + input.getWeight() + "  ");
+                    z++;
+                }
+
+                System.out.println("Acuracia obtida pela rede: " + this.accuracyCalculation() + "%");
             }
         }
-        System.out.println("" + this.epoch);
+
+        System.out.println("Numero de atualizacoess de peso: " + this.epoch);
+        System.out.println("Acuracia obtida pela rede: " + this.accuracyCalculation() + "%");
     }
 
     /**
@@ -144,8 +162,10 @@ public class OutPutLayer {
      * Method that displays the results calculated by the neural network.
      */
     public void showResult() {
+        int i = 0;
         for (Integer result : results) {
-            System.out.println("" + result);
+            System.out.println("Linha " + i + ": " + result);
+            i++;
         }
     }
 

@@ -7,8 +7,6 @@ package Controller;
 import Model.DataBase;
 import Model.OutPutLayer;
 
-
-
 /**
  *
  * @author William
@@ -19,13 +17,22 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        DataBase db = new DataBase(3, new int[3]);
-        //db.showData();
-        OutPutLayer ol = new OutPutLayer(3, 80, 0.1,db);
-        ol.startProcess();
-        //ol.showResult();
-        //ol.accuracyCalculation();
+        int[] conclusion = new int[128];
+
+        conclusion[127] = 1;
         
-    }
+        
+                
+
+        DataBase db = new DataBase(7, conclusion);
     
+
+
+        db.printTable();
+        OutPutLayer ol = new OutPutLayer(7, 100, 0.01, db);
+        ol.startProcess();
+        ol.showResult();
+
+    }
+
 }

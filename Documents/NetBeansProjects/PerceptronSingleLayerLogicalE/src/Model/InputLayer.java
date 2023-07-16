@@ -17,8 +17,8 @@ public class InputLayer {
     private double input;
     private double weight;
 
-    public InputLayer(double InputLayer) {
-        this.weight = weight;
+    public InputLayer() {
+        this.weight = 0;
     }
 
     /**
@@ -54,4 +54,10 @@ public class InputLayer {
     public double getInput() {
         return input;
     }
+
+    public double getWeight() {
+        return weight;
+    }
+    
+    
 }

@@ -12,21 +12,41 @@ public class DataBase {
 
     private int[][] data;
     private int[] conclusion;
-    
+
 //Refatorar esta  classe
     public DataBase(int premiseCount, int[] conclusion) {
         this.data = new int[(int) Math.pow(2, premiseCount)][premiseCount];
         this.conclusion = conclusion;
-        
+
         this.fillValues();
     }
 
-    public void showData() {
+    public void printData() {
         for (int i = 0; i < data.length; i++) {
+            System.out.print("Linha" + i + ": ");
             for (int j = 0; j < data[i].length; j++) {
-                System.out.print(" " + data[i][j]);
+                System.out.print(data[i][j]);
             }
             System.out.println("");
+        }
+    }
+
+    public void printConclusion() {
+        int i = 0;
+        for (int conclusion : this.conclusion) {
+            System.out.println("linha " + i + ": " + conclusion);
+            i++;
+        }
+    }
+
+    public void printTable() {
+        for (int i = 0; i < data.length; i++) {
+            System.out.print("Linha" + i + ": ");
+            for (int j = 0; j < data[i].length; j++) {
+                System.out.print(data[i][j] + "|");
+            }
+            System.out.println("=>" + this.conclusion[i]);
+
         }
     }
 
@@ -37,8 +57,8 @@ public class DataBase {
     public int[] getConclusion() {
         return conclusion;
     }
-    
-        private void fillValues() {
+
+    private void fillValues() {
         int numRows = data.length;
         int numCols = data[0].length;
 
