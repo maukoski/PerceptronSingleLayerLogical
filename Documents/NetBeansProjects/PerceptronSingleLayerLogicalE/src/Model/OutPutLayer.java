@@ -11,7 +11,7 @@ import java.util.LinkedList;
  */
 public class OutPutLayer {
 
-    private LinkedList<Neuron> neurons; // Linked list of neurons.
+    private LinkedList<InputLayer >neurons; // Linked list of neurons.
     private static double learningRate; // Learning rate.
     private DataBase dataBases; // Linked list of data.
     private LinkedList<Integer> results;    // Stores the network's predictions for each record.
@@ -49,7 +49,7 @@ public class OutPutLayer {
         // Initializing the list of neurons
         //Refactor, changing the creation of neurons to something more elegant.
         for (int i = 0; i < neuronCount; i++) {
-            this.neurons.add(new Neuron(0));
+            this.neurons.add(new InputLayer(0));
         }
 
     }
@@ -86,8 +86,8 @@ public class OutPutLayer {
                 //Refactor, changing it to something more elegant.
 
                 //The section that will recalculate the weights.
-                for (Neuron neuron : this.neurons) {
-                    neuron.updateWeight(this.learningRate, error, neuron.getInput());
+                for (InputLayer input : this.neurons) {
+                    input.updateWeight(this.learningRate, error, input.getInput());
                 }
 
                 /*this.neurons.get(0).updateWeight(this.learningRate, error, this.dataBases.get(i).getData()[2]);
@@ -106,8 +106,8 @@ public class OutPutLayer {
      */
     public double Summation() {
         double result = 0;
-        for (Neuron neuron : neurons) {
-            result += neuron.product();
+        for (InputLayer input : this.neurons) {
+            result += input.product();
         }
         return result;
     }
