@@ -9,10 +9,10 @@ import java.util.LinkedList;
  * @author William Xavier Maukoski
  * @version 1.0.0.1
  */
-public class OutPutLayer{
+public class OutPutLayer {
 
     private LinkedList<Neuron> neurons; // Linked list of neurons.
-    private static double learningRate = 0.1; // Learning rate.
+    private static double learningRate; // Learning rate.
     private DataBase dataBases; // Linked list of data.
     private LinkedList<Integer> results;    // Stores the network's predictions for each record.
     private double accuracyTarget;  // Minimum accuracy to stop execution.
@@ -42,7 +42,7 @@ public class OutPutLayer{
         this.accuracyTarget = accuracyTarget;
         this.learningRate = learningRate;
 
-        this.neurons = new LinkedList<Neuron>();
+        this.neurons = new LinkedList<>();
 
         this.dataBases = db;
 
@@ -64,15 +64,17 @@ public class OutPutLayer{
         while (!flag) {
             this.epoch++;
             this.results = new LinkedList<>();
-            this.equalresults = new boolean[dataBases.size()];
+            this.equalresults = new boolean[dataBases.getConclusion().length];
             this.equalsResultInitializing();
 
-            for (DataBase data : dataBases) {
-                for (int i = 0; i < this.neurons.size(); i++) {
-                    this.neurons.get(i).setInput(data.getData()[i]);
+            for (int[] data : dataBases.getData()) {//Access each row of the truth table.
+                for (int i = 0; i < this.neurons.size(); i++) {//Access the elements of the current row of the truth table.
+                    this.neurons.get(i).setInput(data[i]); //The current element of the truth table is set as an input to the neuron.
                 }
-                results.add(this.activation());
+                results.add(this.activation()); //Checks if there is activation and saves in the vector used to compare with the expected answers.
+
             }
+
             if (this.accuracyCalculation() >= this.accuracyTarget) {
                 flag = true;
             } else {
@@ -82,9 +84,15 @@ public class OutPutLayer{
                 }
                 double error = this.errorCalculation(i);
                 //Refactor, changing it to something more elegant.
-                this.neurons.get(0).updateWeight(this.learningRate, error, this.dataBases.get(i).getData()[2]);
+
+                //The section that will recalculate the weights.
+                for (Neuron neuron : this.neurons) {
+                    neuron.updateWeight(this.learningRate, error, neuron.getInput());
+                }
+
+                /*this.neurons.get(0).updateWeight(this.learningRate, error, this.dataBases.get(i).getData()[2]);
                 this.neurons.get(1).updateWeight(this.learningRate, error, this.dataBases.get(i).getData()[2]);
-                this.neurons.get(2).updateWeight(this.learningRate, error, this.dataBases.get(i).getData()[2]);
+                this.neurons.get(2).updateWeight(this.learningRate, error, this.dataBases.get(i).getData()[2]);*/
             }
         }
         System.out.println("" + this.epoch);
