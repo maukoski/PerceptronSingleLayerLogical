@@ -168,7 +168,7 @@ public class OutPutLayer {
      * @return The error of the neural network.
      */
     private double errorCalculation(int index) {
-        return this.dataBases.get(index).getData()[2] - this.results.get(index);
+        return this.dataBases.getConclusion()[index] - this.results.get(index);
     }
 
 }
