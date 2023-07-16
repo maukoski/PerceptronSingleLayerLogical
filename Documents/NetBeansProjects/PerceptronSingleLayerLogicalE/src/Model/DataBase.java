@@ -12,14 +12,17 @@ public class DataBase {
 
     private int[][] data;
     private int[] conclusion;
-
+    private String logicalOperation;
+    
+    
 //Refatorar esta  classe
     public DataBase(int premiseCount, String logicalOperation) {
         this.data = new int[(int) Math.pow(2, premiseCount)][premiseCount];
         this.conclusion = new int[(int) Math.pow(2, premiseCount)];
+        this.logicalOperation = logicalOperation;
 
         this.fillValues();
-        this.fillConclusion(logicalOperation);
+        this.fillConclusion(this.logicalOperation);
     }
 
     public void printData() {
@@ -41,13 +44,18 @@ public class DataBase {
     }
 
     public void printTable() {
-        for (int i = 0; i < data.length; i++) {
-            System.out.print("Linha" + i + ": ");
-            for (int j = 0; j < data[i].length; j++) {
-                System.out.print(data[i][j] + "|");
-            }
-            System.out.println("=>" + this.conclusion[i]);
+        System.out.print("Truth Table " + this.logicalOperation.toUpperCase() + "\n");
 
+        for (int i = 0; i < data.length; i++) {
+            System.out.print("Line" + i + ": ");
+            for (int j = 0; j < data[i].length; j++) {
+                if (j < data[i].length - 1) {
+                    System.out.print(data[i][j] + "|");
+                } else {
+                    System.out.print(data[i][j]);
+                }
+            }
+            System.out.println(" =>" + this.conclusion[i]);
         }
     }
 
@@ -70,19 +78,16 @@ public class DataBase {
             }
         }
     }
-    
-    
-    private void fillConclusion(String logicalOperation){
 
-        if(logicalOperation.toUpperCase().equals("OR")){
-            for(int i = 1; i < this.conclusion.length; i++){
+    private void fillConclusion(String logicalOperation) {
+        if (logicalOperation.toUpperCase().equals("OR")) {
+            for (int i = 1; i < this.conclusion.length; i++) {
                 this.conclusion[i] = 1;
             }
         }
-        
-       if(logicalOperation.toUpperCase().equals("AND")){
-            this.conclusion[this.conclusion.length -1] = 1;
+        if (logicalOperation.toUpperCase().equals("AND")) {
+            this.conclusion[this.conclusion.length - 1] = 1;
         }
-         
+
     }
 }
