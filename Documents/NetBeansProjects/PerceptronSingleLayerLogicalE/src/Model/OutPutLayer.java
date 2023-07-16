@@ -29,7 +29,7 @@ public class OutPutLayer{
      * @throws IllegalArgumentException If the minimum accuracy is less than
      * zero.
      */
-    public NeuronLayer(int neuronCount, double accuracyTarget, double learningRate, DataBase db) {
+    public OutPutLayer(int neuronCount, double accuracyTarget, double learningRate, DataBase db) {
         if (neuronCount <= 0) {
             throw new IllegalArgumentException("The number of neurons in a layer always must be a positive number");
         }
