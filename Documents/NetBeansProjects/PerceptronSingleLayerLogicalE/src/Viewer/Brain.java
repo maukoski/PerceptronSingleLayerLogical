@@ -19,7 +19,7 @@ public class Brain {
     private double minimumAccuracy;
     private double learningRate;
 
-    public Brain(int numInputs, double minimumAccuracy, double learningRate) {
+    public Brain(int numInputs, double minimumAccuracy, double learningRate, String logicalOperation) {
         this.numInputs = numInputs;
         this.minimumAccuracy = minimumAccuracy;
         this.learningRate = learningRate;
@@ -27,7 +27,7 @@ public class Brain {
 
         conclusion[3] = 1;
 
-        this.db = new DataBase(this.numInputs, "and");
+        this.db = new DataBase(this.numInputs, logicalOperation);
         this.ol = new OutPutLayer(this.numInputs, this.minimumAccuracy, this.learningRate, db);
     }
     
