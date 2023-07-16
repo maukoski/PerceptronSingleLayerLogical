@@ -11,7 +11,7 @@ import java.util.LinkedList;
  */
 public class OutPutLayer {
 
-    private LinkedList<InputLayer >neurons; // Linked list of neurons.
+    private LinkedList<InputLayer >inputlayer; // Linked list of neurons.
     private static double learningRate; // Learning rate.
     private DataBase dataBases; // Linked list of data.
     private LinkedList<Integer> results;    // Stores the network's predictions for each record.
@@ -42,14 +42,14 @@ public class OutPutLayer {
         this.accuracyTarget = accuracyTarget;
         this.learningRate = learningRate;
 
-        this.neurons = new LinkedList<>();
+        this.inputlayer = new LinkedList<>();
 
         this.dataBases = db;
 
         // Initializing the list of neurons
         //Refactor, changing the creation of neurons to something more elegant.
         for (int i = 0; i < neuronCount; i++) {
-            this.neurons.add(new InputLayer(0));
+            this.inputlayer.add(new InputLayer(0));
         }
 
     }
@@ -58,7 +58,7 @@ public class OutPutLayer {
      * Method responsible for executing all the logic behind the network, it
      * will run until the minimum accuracy is obtained
      */
-    public void startProcess() {
+    public void startProcess(){
         boolean flag = false;
         //while flag is false, keep executating
         while (!flag) {
@@ -68,8 +68,8 @@ public class OutPutLayer {
             this.equalsResultInitializing();
 
             for (int[] data : dataBases.getData()) {//Access each row of the truth table.
-                for (int i = 0; i < this.neurons.size(); i++) {//Access the elements of the current row of the truth table.
-                    this.neurons.get(i).setInput(data[i]); //The current element of the truth table is set as an input to the neuron.
+                for (int i = 0; i < this.inputlayer.size(); i++) {//Access the elements of the current row of the truth table.
+                    this.inputlayer.get(i).setInput(data[i]); //The current element of the truth table is set as an input to the neuron.
                 }
                 results.add(this.activation()); //Checks if there is activation and saves in the vector used to compare with the expected answers.
 
@@ -86,7 +86,7 @@ public class OutPutLayer {
                 //Refactor, changing it to something more elegant.
 
                 //The section that will recalculate the weights.
-                for (InputLayer input : this.neurons) {
+                for (InputLayer input : this.inputlayer) {
                     input.updateWeight(this.learningRate, error, input.getInput());
                 }
 
@@ -106,7 +106,7 @@ public class OutPutLayer {
      */
     public double Summation() {
         double result = 0;
-        for (InputLayer input : this.neurons) {
+        for (InputLayer input : this.inputlayer) {
             result += input.product();
         }
         return result;
