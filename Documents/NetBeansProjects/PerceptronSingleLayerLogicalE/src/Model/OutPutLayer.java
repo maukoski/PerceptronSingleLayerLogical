@@ -133,13 +133,13 @@ public class OutPutLayer {
      */
     public double accuracyCalculation() {
         double accuracy = 0;
-        for (int i = 0; i < dataBases.size(); i++) {
-            if (this.dataBases.get(i).getData()[this.dataBases.get(i).getData().length - 1] == this.results.get(i)) {
+        for (int i = 0; i < dataBases.getConclusion().length; i++) {
+            if (this.dataBases.getConclusion()[i] == this.results.get(i)) {
                 accuracy++;
                 this.equalresults[i] = true;
             }
         }
-        return ((accuracy / this.dataBases.size()) * 100);
+        return ((accuracy / this.dataBases.getConclusion().length) * 100);
     }
 
     /**
