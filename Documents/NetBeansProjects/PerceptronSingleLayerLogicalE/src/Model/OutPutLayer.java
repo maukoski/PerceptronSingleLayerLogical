@@ -7,7 +7,7 @@ import java.util.LinkedList;
  * the data and performs calculations of the function to check the activation.
  *
  * @author William Xavier Maukoski
- * @version 1.0.0.1
+ * @version 1.1
  */
 public class OutPutLayer {
 
