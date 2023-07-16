@@ -16,19 +16,19 @@ public class Brain {
     private int numInputs;
     private DataBase db;
     private OutPutLayer ol;
+    private double minimumAccuracy;
+    private double learningRate;
 
-    public Brain(int numInputs) {
+    public Brain(int numInputs, double minimumAccuracy, double learningRate) {
         this.numInputs = numInputs;
-
+        this.minimumAccuracy = minimumAccuracy;
+        this.learningRate = learningRate;
         int[] conclusion = new int[4];
 
         conclusion[3] = 1;
-        conclusion[1] = 1;
-        conclusion[0] = 1;
 
         this.db = new DataBase(this.numInputs, conclusion);
-
-        this.ol = new OutPutLayer(this.numInputs, 100, 0.1, db);
+        this.ol = new OutPutLayer(this.numInputs, this.minimumAccuracy, this.learningRate, db);
 
     }
     

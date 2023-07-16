@@ -82,14 +82,6 @@ public class OutPutLayer {
                     i++;
                 }
             } else {
-                int z = 0;
-                for (InputLayer input : this.inputlayer) {
-                    System.out.println("X" + z + ": " + input.getWeight());
-                    z++;
-                }
-
-                System.out.println("Acuracia obtida pela rede: " + this.accuracyCalculation() + "%");
-
                 int i = 0;
                 while (this.equalresults[i]) {
                     i++;
@@ -100,11 +92,6 @@ public class OutPutLayer {
                 for (int j = 0; j < this.dataBases.getData()[i].length; j++) {
                     this.inputlayer.get(j).updateWeight(this.learningRate, error, this.dataBases.getData()[i][j]);
                 }
-
-                //System.out.println("Acuracia: " + this.accuracyCalculation());
-                /*this.neurons.get(0).updateWeight(this.learningRate, error, this.dataBases.get(i).getData()[2]);
-                this.neurons.get(1).updateWeight(this.learningRate, error, this.dataBases.get(i).getData()[2]);
-                this.neurons.get(2).updateWeight(this.learningRate, error, this.dataBases.get(i).getData()[2]);*/
             }
         }
 
