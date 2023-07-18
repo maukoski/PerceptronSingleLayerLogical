@@ -10,7 +10,7 @@ package Model;
  * attribute weight, that represents the weight of the neuron.
  *
  * @author William Xavier Maukoski
- * @version 1.0
+ * @version 1.1
  */
 public class InputLayer {
 
@@ -19,7 +19,7 @@ public class InputLayer {
     private double prevWeightUpdate;
     private double gradientSum; //a atribute to keep track of the sum of squares of gradients.
     private double gradientSquareAvg;// We add an extra parameter to keep track of the moving average of the square of gradients.
-    private final double decayRate = 0.9;// Decay rate for the moving average.
+    private static double decayRate = 0.9;// Decay rate for the moving average.
 
     /**
      * The constructor method of the InputLayer class, where the weight and
