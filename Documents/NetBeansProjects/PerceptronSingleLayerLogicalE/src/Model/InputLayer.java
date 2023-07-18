@@ -16,6 +16,8 @@ public class InputLayer {
 
     private double input;
     private double weight;
+    private double prevWeightUpdate;
+    private double gradientSum;
 
     /**
      * The constructor method of the InputLayer class, where the weight and
@@ -80,6 +82,48 @@ public class InputLayer {
         this.weight = this.weight + (learningRate * error * input);
     }
     
+    /**
+     * Method that updates the weights of the neurons using the Momentum method. 
+     * Momentum method helps the gradient descent algorithm gain momentum and speed up its convergence towards minima.
+     * It does this by taking into account the past gradients to smooth out the update.
+     *
+     * @param learningRate Learning rate defined by the user.
+     * @param error The error calculated from the expected output and the predicted output.
+     * @param input The input, used to adjust the weights.
+     * @param momentum momentum The momentum coefficient. This is a hyperparameter that determines the fraction of the update vector of the past time step to be added to the current update vector.
+     */
+    public void updateWeightWithMomentum(double learningRate, double error, double input,  double momentum) {
+        // Calculate the gradient
+        double gradient = error * input;
+
+        // Calculate the weight update using momentum
+        double weightUpdate = momentum * prevWeightUpdate + learningRate * gradient;
+
+        // Update the weight
+        this.weight += weightUpdate;
+
+        // Save the weight update for the next iteration
+        this.prevWeightUpdate = weightUpdate;
+    }
+    
+    /**
+     * Updates the weights using Adaptative Gradient.
+     *
+     * @param learningRate learning rate, provided by the user.
+     * @param error The error calculated from the expected response and the response
+     * predicted by the neural network.
+     * @param input The input, to adjust the weights.
+     */
+    public void updateWeightAdaGrad(double learningRate, double error, double input) {       
+        // Calculate the gradient
+        double gradient = error * input;
+
+        // Add the square of the gradient to the sum
+        gradientSum += Math.pow(gradient, 2);
+
+        // Adjust the weight, dividing the learning rate by the square root of the sum of squares of past gradients
+        this.weight = this.weight + (learningRate / (Math.sqrt(gradientSum) + 1e-7)) * gradient;
+    }
     
 
     /**
