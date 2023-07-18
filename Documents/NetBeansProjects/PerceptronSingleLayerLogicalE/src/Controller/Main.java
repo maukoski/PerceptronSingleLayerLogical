@@ -16,9 +16,9 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-     Brain brain = new Brain(2,100,0.1,"or");
+     Brain brain = new Brain(8,100,0.01,"AND");
      brain.startProcess();
-     brain.printTable();
+   
     }
 
 }

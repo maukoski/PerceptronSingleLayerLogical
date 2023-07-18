@@ -70,7 +70,7 @@ public class InputLayer {
     /**
      * Gets the value of input.
      *
-     * @return the input value.
+//     * @return the input value.
      */
     public double getInput() {
         return input;
