@@ -17,7 +17,9 @@ public class InputLayer {
     private double input;
     private double weight;
     private double prevWeightUpdate;
-    private double gradientSum;
+    private double gradientSum; //a atribute to keep track of the sum of squares of gradients.
+    private double gradientSquareAvg;// We add an extra parameter to keep track of the moving average of the square of gradients.
+    private final double decayRate = 0.9;// Decay rate for the moving average.
 
     /**
      * The constructor method of the InputLayer class, where the weight and
@@ -81,18 +83,22 @@ public class InputLayer {
     private void gradientDescedent(double learningRate, double error, double input) {
         this.weight = this.weight + (learningRate * error * input);
     }
-    
+
     /**
-     * Method that updates the weights of the neurons using the Momentum method. 
-     * Momentum method helps the gradient descent algorithm gain momentum and speed up its convergence towards minima.
-     * It does this by taking into account the past gradients to smooth out the update.
+     * Method that updates the weights of the neurons using the Momentum method.
+     * Momentum method helps the gradient descent algorithm gain momentum and
+     * speed up its convergence towards minima. It does this by taking into
+     * account the past gradients to smooth out the update.
      *
      * @param learningRate Learning rate defined by the user.
-     * @param error The error calculated from the expected output and the predicted output.
+     * @param error The error calculated from the expected output and the
+     * predicted output.
      * @param input The input, used to adjust the weights.
-     * @param momentum momentum The momentum coefficient. This is a hyperparameter that determines the fraction of the update vector of the past time step to be added to the current update vector.
+     * @param momentum momentum The momentum coefficient. This is a
+     * hyperparameter that determines the fraction of the update vector of the
+     * past time step to be added to the current update vector.
      */
-    public void updateWeightWithMomentum(double learningRate, double error, double input,  double momentum) {
+    public void updateWeightWithMomentum(double learningRate, double error, double input, double momentum) {
         // Calculate the gradient
         double gradient = error * input;
 
@@ -105,16 +111,16 @@ public class InputLayer {
         // Save the weight update for the next iteration
         this.prevWeightUpdate = weightUpdate;
     }
-    
+
     /**
      * Updates the weights using Adaptative Gradient.
      *
      * @param learningRate learning rate, provided by the user.
-     * @param error The error calculated from the expected response and the response
-     * predicted by the neural network.
+     * @param error The error calculated from the expected response and the
+     * response predicted by the neural network.
      * @param input The input, to adjust the weights.
      */
-    public void updateWeightAdaGrad(double learningRate, double error, double input) {       
+    public void updateWeightAdaGrad(double learningRate, double error, double input) {
         // Calculate the gradient
         double gradient = error * input;
 
@@ -124,7 +130,25 @@ public class InputLayer {
         // Adjust the weight, dividing the learning rate by the square root of the sum of squares of past gradients
         this.weight = this.weight + (learningRate / (Math.sqrt(gradientSum) + 1e-7)) * gradient;
     }
-    
+
+    /**
+     * Updates the weights using RMSProp.
+     *
+     * @param learningRate learning rate, provided by the user.
+     * @param error The error calculated from the expected response and the
+     * response predicted by the neural network.
+     * @param input The input, to adjust the weights.
+     */
+    public void updateWeightRMSProp(double learningRate, double error, double input) {
+        // Calculate the gradient
+        double gradient = error * input;
+
+        // Update the moving average of the square of gradients
+        gradientSquareAvg = decayRate * gradientSquareAvg + (1 - decayRate) * Math.pow(gradient, 2);
+
+        // Adjust the weight, dividing the learning rate by the square root of the moving average of the square of past gradients
+        this.weight = this.weight + (learningRate / (Math.sqrt(gradientSquareAvg) + 1e-7)) * gradient;
+    }
 
     /**
      * Gets the value of input.
