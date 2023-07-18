@@ -68,9 +68,24 @@ public class InputLayer {
     }
 
     /**
+     * Updates the weights to minimize the error, using the gradient descent
+     * approach.
+     *
+     * @param learningRate learning rate, provided by the user.
+     * @param error Error calculated from the expected response and the response
+     * predicted by the neural network.
+     * @param input The input, to adjust the weights.
+     */
+    private void gradientDescedent(double learningRate, double error, double input) {
+        this.weight = this.weight + (learningRate * error * input);
+    }
+    
+    
+
+    /**
      * Gets the value of input.
      *
-//     * @return the input value.
+     * // * @return the input value.
      */
     public double getInput() {
         return input;
