@@ -17,12 +17,13 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        StrategyWeightUpdater strategy = new StrategyWeightUpdater(1);
+        StrategyWeightUpdater strategy = new StrategyWeightUpdater(4);
+        strategy.setLearningRate(0.01);
+        strategy.setMomentum(0.995);
         
-        
-        
-        Brain brain = new Brain(8, 100, 0.01, "AND",strategy);
+        Brain brain = new Brain(4, 100, 0.1, "AND",strategy);
         brain.startProcess();
+        //brain.printTable();
 
     }
 

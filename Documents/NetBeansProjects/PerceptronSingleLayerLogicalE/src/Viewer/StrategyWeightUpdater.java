@@ -16,12 +16,12 @@ public class StrategyWeightUpdater {
 
     /**
      * Constructs a new StrategyWeightUpdater with a specified strategy.
-     * @param strategy the weight update strategy to be used.
+     * @param strategy the weight update strategy to be used.<br>
      *
-     * 1 - Defines the strategy to update the weights as Gradient Descent.
-     * 2 - Defines the strategy to update the weights as Momentum.
-     * 3 - Defines the strategy to update the weights as Adaptive Gradient (AdaGrad).
-     * 4 - Defines the strategy to update the weights as RMSProp.
+     * <b> 1 </b> - Defines the strategy to update the weights as Gradient Descent.<br>
+     * <b> 2 </b> - Defines the strategy to update the weights as Momentum.<br>
+     * <b> 3 </b> - Defines the strategy to update the weights as Adaptive Gradient (AdaGrad).<br>
+     * <b> 4 </b> - Defines the strategy to update the weights as RMSProp.<br>
      *
      * @throws IllegalArgumentException if the strategy number does not correspond to any known weight update methods.
      */

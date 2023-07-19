@@ -90,8 +90,10 @@ public class OutPutLayer {
                 }
                 double error = this.errorCalculation(i);
                 //The section that will recalculate the weights.
-
+                this.strategy.setError(error);
+                
                 for (int j = 0; j < this.dataBases.getData()[i].length; j++) {
+                    this.strategy.setInput(this.dataBases.getData()[i][j]);
                     this.inputlayer.get(j).updateWeight(this.strategy);
                 }
             }
