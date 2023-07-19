@@ -92,7 +92,7 @@ public class OutPutLayer {
                 //The section that will recalculate the weights.
 
                 for (int j = 0; j < this.dataBases.getData()[i].length; j++) {
-                    this.inputlayer.get(j).updateWeight(this.learningRate, error, this.dataBases.getData()[i][j]);
+                    this.inputlayer.get(j).updateWeight(this.strategy);
                 }
             }
         }
