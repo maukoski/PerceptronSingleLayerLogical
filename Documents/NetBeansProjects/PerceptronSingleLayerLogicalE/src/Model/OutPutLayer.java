@@ -1,6 +1,8 @@
 package Model;
 
 import Viewer.StrategyWeightUpdater;
+import Viewer.Writer;
+import java.io.IOException;
 import java.util.LinkedList;
 
 /**
@@ -39,10 +41,8 @@ public class OutPutLayer {
             throw new IllegalArgumentException("The minimum accuracy of a single layer perceptron must be equal to or greater than zero");
         }
 
-        
         this.epoch = -1;
         this.accuracyTarget = accuracyTarget;
-        
 
         this.inputlayer = new LinkedList<>();
         this.strategy = strategy;
@@ -91,7 +91,7 @@ public class OutPutLayer {
                 double error = this.errorCalculation(i);
                 //The section that will recalculate the weights.
                 this.strategy.setError(error);
-                
+
                 for (int j = 0; j < this.dataBases.getData()[i].length; j++) {
                     this.strategy.setInput(this.dataBases.getData()[i][j]);
                     this.inputlayer.get(j).updateWeight(this.strategy);
@@ -101,6 +101,14 @@ public class OutPutLayer {
 
         System.out.println("Numero de atualizacoess de peso: " + this.epoch);
         System.out.println("Acuracia obtida pela rede: " + this.accuracyCalculation() + "%");
+
+        Writer writer = new Writer("C:\\Users\\William\\Desktop\\Weights.txt");
+
+        try {
+            writer.writeWeights(this.inputlayer);
+        } catch(IOException ioex){
+            System.out.println("Error");
+        }
     }
 
     /**

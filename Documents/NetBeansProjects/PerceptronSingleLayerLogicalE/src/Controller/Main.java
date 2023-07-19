@@ -6,6 +6,7 @@ package Controller;
 
 import Viewer.Brain;
 import Viewer.StrategyWeightUpdater;
+import Viewer.Writer;
 
 /**
  *
@@ -17,12 +18,13 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        StrategyWeightUpdater strategy = new StrategyWeightUpdater(4);
+        StrategyWeightUpdater strategy = new StrategyWeightUpdater(1);
         strategy.setLearningRate(0.01);
-        strategy.setMomentum(0.995);
+        strategy.setMomentum(0.1);
         
-        Brain brain = new Brain(4, 100, 0.1, "AND",strategy);
+        Brain brain = new Brain(2, 100, 0.1, "AND",strategy);
         brain.startProcess();
+        
         //brain.printTable();
 
     }

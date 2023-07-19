@@ -48,6 +48,7 @@ public class Brain {
      */
     public void startProcess() {
         this.ol.startProcess();
+        
     }
 
     /**
