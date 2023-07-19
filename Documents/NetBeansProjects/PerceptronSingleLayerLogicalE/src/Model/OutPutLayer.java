@@ -1,5 +1,6 @@
 package Model;
 
+import Viewer.StrategyWeightUpdater;
 import java.util.LinkedList;
 
 /**
@@ -12,7 +13,7 @@ import java.util.LinkedList;
 public class OutPutLayer {
 
     private LinkedList<InputLayer> inputlayer; // Linked list of neurons.
-    private static double learningRate; // Learning rate.
+    private StrategyWeightUpdater strategy;
     private DataBase dataBases; // Linked list of data.
     private LinkedList<Integer> results;    // Stores the network's predictions for each record.
     private double accuracyTarget;  // Minimum accuracy to stop execution.
@@ -29,7 +30,7 @@ public class OutPutLayer {
      * @throws IllegalArgumentException If the minimum accuracy is less than
      * zero.
      */
-    public OutPutLayer(int neuronCount, double accuracyTarget, double learningRate, DataBase db) {
+    public OutPutLayer(int neuronCount, double accuracyTarget, double learningRate, DataBase db, StrategyWeightUpdater strategy) {
         if (neuronCount <= 0) {
             throw new IllegalArgumentException("The number of neurons in a layer always must be a positive number");
         }
@@ -38,12 +39,13 @@ public class OutPutLayer {
             throw new IllegalArgumentException("The minimum accuracy of a single layer perceptron must be equal to or greater than zero");
         }
 
+        
         this.epoch = -1;
         this.accuracyTarget = accuracyTarget;
-        this.learningRate = learningRate;
+        
 
         this.inputlayer = new LinkedList<>();
-
+        this.strategy = strategy;
         this.dataBases = db;
 
         // Initializing the list of neurons
