@@ -8,18 +8,27 @@ package Viewer;
  */
 public class StrategyWeightUpdater {
     
-    private String strategy;
+    private int strategy;
     private double learningRate;
     private double error;
     private double input;
     private double momentum;
 
     /**
-     * Constructs a new StrategyWeightUpdater with a given strategy.
-     *
+     * Constructs a new StrategyWeightUpdater with a specified strategy.
      * @param strategy the weight update strategy to be used.
+     *
+     * 1 - Defines the strategy to update the weights as Gradient Descent.
+     * 2 - Defines the strategy to update the weights as Momentum.
+     * 3 - Defines the strategy to update the weights as Adaptive Gradient (AdaGrad).
+     * 4 - Defines the strategy to update the weights as RMSProp.
+     *
+     * @throws IllegalArgumentException if the strategy number does not correspond to any known weight update methods.
      */
-    public StrategyWeightUpdater(String strategy) {
+    public StrategyWeightUpdater(int strategy) {
+        if(strategy < 1 || strategy > 4){
+            throw new IllegalArgumentException("The number passed as an argument does not correspond to any weight update method. Please refer to the documentation.");
+        }
         this.strategy = strategy;
     }
 
@@ -28,7 +37,7 @@ public class StrategyWeightUpdater {
      *
      * @return the weight update strategy.
      */
-    public String getStrategy() {
+    public int getStrategy() {
         return strategy;
     }
 
