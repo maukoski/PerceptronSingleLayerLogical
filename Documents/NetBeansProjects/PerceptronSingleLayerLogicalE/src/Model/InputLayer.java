@@ -120,7 +120,7 @@ public class InputLayer {
      * response predicted by the neural network.
      * @param input The input, to adjust the weights.
      */
-    public void updateWeightAdaGrad(double learningRate, double error, double input) {
+    public void updateWeightAdaptativeGradient(double learningRate, double error, double input) {
         // Calculate the gradient
         double gradient = error * input;
 
@@ -144,7 +144,7 @@ public class InputLayer {
         double gradient = error * input;
 
         // Update the moving average of the square of gradients
-        gradientSquareAvg = decayRate * gradientSquareAvg + (1 - decayRate) * Math.pow(gradient, 2);
+        this.gradientSquareAvg = decayRate * gradientSquareAvg + (1 - decayRate) * Math.pow(gradient, 2);
 
         // Adjust the weight, dividing the learning rate by the square root of the moving average of the square of past gradients
         this.weight = this.weight + (learningRate / (Math.sqrt(gradientSquareAvg) + 1e-7)) * gradient;
