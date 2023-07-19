@@ -21,6 +21,7 @@ public class OutPutLayer {
     private double accuracyTarget;  // Minimum accuracy to stop execution.
     private boolean[] equalresults; // List of hits and misses of the neural network.
     private int epoch;  // Variable used to count the number of weight updates.
+    private String outFilePath;
 
     /**
      * Creates a new layer of neurons with a certain number of neurons.
@@ -32,7 +33,7 @@ public class OutPutLayer {
      * @throws IllegalArgumentException If the minimum accuracy is less than
      * zero.
      */
-    public OutPutLayer(int neuronCount, double accuracyTarget, double learningRate, DataBase db, StrategyWeightUpdater strategy) {
+    public OutPutLayer(int neuronCount, double accuracyTarget, double learningRate, DataBase db, StrategyWeightUpdater strategy, String outFilePath) {
         if (neuronCount <= 0) {
             throw new IllegalArgumentException("The number of neurons in a layer always must be a positive number");
         }
@@ -47,6 +48,8 @@ public class OutPutLayer {
         this.inputlayer = new LinkedList<>();
         this.strategy = strategy;
         this.dataBases = db;
+        
+        this.outFilePath = outFilePath;
 
         // Initializing the list of neurons
         //Refactor, changing the creation of neurons to something more elegant.
@@ -102,7 +105,7 @@ public class OutPutLayer {
         System.out.println("Numero de atualizacoess de peso: " + this.epoch);
         System.out.println("Acuracia obtida pela rede: " + this.accuracyCalculation() + "%");
 
-        Writer writer = new Writer("C:\\Users\\William\\Desktop\\Weights.txt");
+        Writer writer = new Writer(this.outFilePath);
 
         try {
             writer.writeWeights(this.inputlayer);
