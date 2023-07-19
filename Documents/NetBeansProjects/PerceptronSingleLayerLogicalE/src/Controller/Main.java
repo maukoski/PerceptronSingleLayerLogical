@@ -5,6 +5,7 @@
 package Controller;
 
 import Viewer.Brain;
+import Viewer.StrategyWeightUpdater;
 
 /**
  *
@@ -16,9 +17,13 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-     Brain brain = new Brain(8,100,0.01,"AND");
-     brain.startProcess();
-   
+        StrategyWeightUpdater strategy = new StrategyWeightUpdater(1);
+        
+        
+        
+        Brain brain = new Brain(8, 100, 0.01, "AND",strategy);
+        brain.startProcess();
+
     }
 
 }
