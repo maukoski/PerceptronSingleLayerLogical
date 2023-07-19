@@ -4,6 +4,8 @@
  */
 package Model;
 
+import Viewer.StrategyWeightUpdater;
+
 /**
  * This class represents a neuron in a neural network. It contains the
  * attributes input, which will store the input from the data base. The
@@ -59,16 +61,24 @@ public class InputLayer {
     }
 
     /**
-     * Updates the weights to minimize the error, using the gradient descent
-     * approach.
+     * Update the error with the selected method
      *
-     * @param learningRate learning rate, provided by the user.
-     * @param error Error calculated from the expected response and the response
-     * predicted by the neural network.
-     * @param input The input, to adjust the weights.
+     * @param strategy The container with hyperparameter and a reference to the select weight updater method.
+     * 
      */
-    public void updateWeight(double learningRate, double error, double input) {
-        this.weight = this.weight + (learningRate * error * input);
+    public void updateWeight(StrategyWeightUpdater strategy) {
+        if (strategy.getStrategy() == 1) {
+            this.gradientDescedent(strategy.getLearningRate(), strategy.getError(), strategy.getInput());
+        }
+        if (strategy.getStrategy() == 2) {
+            this.updateWeightMomentum(strategy.getLearningRate(), strategy.getError(), strategy.getInput(), strategy.getMomentum());
+        }
+        if (strategy.getStrategy() == 3) {
+            this.updateWeightAdaptativeGradient(strategy.getLearningRate(), strategy.getError(), strategy.getInput());
+        }
+        if (strategy.getStrategy() == 4) {
+            this.updateWeightRMSProp(strategy.getLearningRate(), strategy.getError(), strategy.getInput());
+        }
     }
 
     /**
@@ -98,7 +108,7 @@ public class InputLayer {
      * hyperparameter that determines the fraction of the update vector of the
      * past time step to be added to the current update vector.
      */
-    public void updateWeightWithMomentum(double learningRate, double error, double input, double momentum) {
+    public void updateWeightMomentum(double learningRate, double error, double input, double momentum) {
         // Calculate the gradient
         double gradient = error * input;
 
