@@ -47,7 +47,7 @@ public class StrategyWeightUpdater {
      *     
      * @return the learning rate.
      */
-    public double getLearningRate() {
+    public double getLearningRate(){
         return learningRate;
     }
 
@@ -56,7 +56,7 @@ public class StrategyWeightUpdater {
      *
      * @param learningRate the learning rate to be set.
      */
-    public void setLearningRate(double learningRate) {
+    public void setLearningRate(double learningRate){
         this.learningRate = learningRate;
     }
 
@@ -65,7 +65,7 @@ public class StrategyWeightUpdater {
      *
      * @return the error.
      */
-    public double getError() {
+    public double getError(){
         return error;
     }
 
@@ -74,7 +74,7 @@ public class StrategyWeightUpdater {
      *
      * @param error the error to be set.
      */
-    public void setError(double error) {
+    public void setError(double error){
         this.error = error;
     }
 
