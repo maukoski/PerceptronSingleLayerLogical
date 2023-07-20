@@ -63,8 +63,9 @@ public class InputLayer {
     /**
      * Update the error with the selected method
      *
-     * @param strategy The container with hyperparameter and a reference to the select weight updater method.
-     * 
+     * @param strategy The container with hyperparameter and a reference to the
+     * select weight updater method.
+     *
      */
     public void updateWeight(StrategyWeightUpdater strategy) {
         if (strategy.getStrategy() == 1) {
@@ -176,6 +177,10 @@ public class InputLayer {
      */
     public double getWeight() {
         return weight;
+    }
+
+    public void setWeight(double weight) {
+        this.weight = weight;
     }
 
 }

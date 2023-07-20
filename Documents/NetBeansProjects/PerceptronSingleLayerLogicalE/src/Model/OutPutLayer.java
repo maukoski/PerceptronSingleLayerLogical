@@ -47,8 +47,7 @@ public class OutPutLayer {
 
         this.inputlayer = new LinkedList<>();
         this.strategy = strategy;
-        
-        
+
         this.outFilePath = outFilePath;
 
         // Initializing the list of neurons
@@ -64,7 +63,7 @@ public class OutPutLayer {
      */
     public void startTraining(DataBase db) {
         this.dataBases = db;
-        
+
         boolean flag = false;
         //while flag is false, keep executating
         while (!flag) {
@@ -111,8 +110,33 @@ public class OutPutLayer {
 
         try {
             writer.writeWeights(this.inputlayer);
-        } catch(IOException ioex){
+        } catch (IOException ioex) {
             System.out.println("Error");
+        }
+    }
+
+    public void validation(LinkedList<DataBase> batch) {
+        this.inputlayer.get(0).setWeight(0.5);
+        this.inputlayer.get(1).setWeight(0.5);
+
+        for (DataBase db : batch) {
+            this.dataBases = db;
+
+            //while flag is false, keep executating
+            this.results = new LinkedList<>();
+            this.equalresults = new boolean[dataBases.getConclusion().length];
+            this.equalsResultInitializing();
+
+            this.results.clear();
+            for (int[] data : dataBases.getData()) {//Access each row of the truth table.
+                for (int i = 0; i < this.inputlayer.size(); i++) {//Access the elements of the current row of the truth table.
+                    this.inputlayer.get(i).setInput(data[i]); //The current element of the truth table is set as an input to the neuron.
+                }
+                results.add(this.activation()); //Checks if there is activation and saves in the vector used to compare with the expected answers.
+            }
+
+            System.out.println("Acuracia obtida pela rede: " + this.accuracyCalculation() + "%");
+
         }
     }
 
