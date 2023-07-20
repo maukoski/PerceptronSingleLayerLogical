@@ -33,7 +33,7 @@ public class OutPutLayer {
      * @throws IllegalArgumentException If the minimum accuracy is less than
      * zero.
      */
-    public OutPutLayer(int neuronCount, double accuracyTarget, double learningRate, DataBase db, StrategyWeightUpdater strategy, String outFilePath) {
+    public OutPutLayer(int neuronCount, double accuracyTarget, double learningRate, StrategyWeightUpdater strategy, String outFilePath) {
         if (neuronCount <= 0) {
             throw new IllegalArgumentException("The number of neurons in a layer always must be a positive number");
         }
@@ -47,7 +47,7 @@ public class OutPutLayer {
 
         this.inputlayer = new LinkedList<>();
         this.strategy = strategy;
-        this.dataBases = db;
+        
         
         this.outFilePath = outFilePath;
 
@@ -62,7 +62,9 @@ public class OutPutLayer {
      * Method responsible for executing all the logic behind the network, it
      * will run until the minimum accuracy is obtained
      */
-    public void startProcess() {
+    public void startTraining(DataBase db) {
+        this.dataBases = db;
+        
         boolean flag = false;
         //while flag is false, keep executating
         while (!flag) {

@@ -24,6 +24,13 @@ public class DataBase {
         this.fillValues();
         this.fillConclusion(this.logicalOperation);
     }
+    
+    public DataBase(int[][] data, int[] conclusion, String logicalOperation){
+        this.data = data;
+        this.conclusion = conclusion;
+        this.logicalOperation = logicalOperation;
+        
+    }
 
     public void printData() {
         for (int i = 0; i < data.length; i++) {

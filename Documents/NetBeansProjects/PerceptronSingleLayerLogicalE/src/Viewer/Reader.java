@@ -7,6 +7,7 @@ package Viewer;
 import Model.DataBase;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.LinkedList;
 import java.util.Scanner;
 
 /**
@@ -22,6 +23,28 @@ public class Reader {
         this.filePath = filePath;
         this.numInputs = numInputs;
     }
+    
+    public LinkedList<DataBase> readDatabasesFromDirectory(String directoryPath) {
+        LinkedList<DataBase> databases = new LinkedList<>();
+
+        File folder = new File(directoryPath);
+        File[] listOfFiles = folder.listFiles();
+
+        if (listOfFiles != null) {
+            for (File file : listOfFiles) {
+                if (file.isFile() && file.getName().endsWith(".txt")) {
+                    this.filePath = file.getPath();
+                    DataBase db = this.readDatabase();
+                    databases.add(db);
+                }
+            }
+        } else {
+            System.out.println("The folder is empty or does not exist.");
+        }
+
+        return databases;
+    }
+
 
     public DataBase readDatabase() {
         int[][] data = new int[(int) Math.pow(2, numInputs)][this.numInputs];  // You might want to change these values based on your use case
