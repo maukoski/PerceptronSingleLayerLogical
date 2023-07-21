@@ -22,7 +22,9 @@ public class Main {
         strategy.setLearningRate(0.1);
         strategy.setMomentum(0.1);
         
-        Brain brain = new Brain(2, 100, 0.1, "or",strategy,"C:\\Users\\William\\Desktop\\Weights.txt","C:\\Users\\William\\Desktop\\Validation Batch");
+        Brain brain = new Brain(2, 100, "or",strategy,"C:\\Users\\William\\Desktop\\Weights.txt","C:\\Users\\William\\Desktop\\Validation Batch");
+        //Brain brain = new Brain(2, 100, "and", strategy, "C:\\Users\\William\\Desktop\\Weight.txt");
+        
         brain.startProcess(2);
         
         //brain.printTable();

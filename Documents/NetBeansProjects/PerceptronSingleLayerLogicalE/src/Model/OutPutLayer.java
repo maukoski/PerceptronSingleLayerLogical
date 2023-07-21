@@ -33,7 +33,7 @@ public class OutPutLayer {
      * @throws IllegalArgumentException If the minimum accuracy is less than
      * zero.
      */
-    public OutPutLayer(int neuronCount, double accuracyTarget, double learningRate, StrategyWeightUpdater strategy, String outFilePath) {
+    public OutPutLayer(int neuronCount, double accuracyTarget, StrategyWeightUpdater strategy, String outFilePath) {
         if (neuronCount <= 0) {
             throw new IllegalArgumentException("The number of neurons in a layer always must be a positive number");
         }
@@ -62,8 +62,9 @@ public class OutPutLayer {
      * will run until the minimum accuracy is obtained
      */
     public void startTraining(DataBase db) {
+        
         this.dataBases = db;
-
+        
         boolean flag = false;
         //while flag is false, keep executating
         while (!flag) {

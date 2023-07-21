@@ -6,7 +6,7 @@ package Viewer;
 
 import Model.DataBase;
 import Model.OutPutLayer;
-import java.util.LinkedList;
+
 
 /**
  *
@@ -18,7 +18,7 @@ public class Brain {
     private DataBase db;
     private OutPutLayer ol;
     private double minimumAccuracy;
-    private double learningRate;
+   
     private String inputFilePath;
 
     /**
@@ -27,26 +27,26 @@ public class Brain {
      * @param numInputs Number of inputs is used both to define the number of
      * premises and the number of inputs in the neuron.
      * @param minimumAccuracy Minimum accuracy to stop execution.
-     * @param learningRate The weight update rate.
+     
      * @param logicalOperation The logical operation being worked on.
      * @param outFilePath the path to the outPut result file.
      * @throws IllegalArgumentException If numInputs is less than 2. zero.
      *
      */
-    public Brain(int numInputs, double minimumAccuracy, double learningRate, String logicalOperation, StrategyWeightUpdater strategy, String outFilePath) {
+    public Brain(int numInputs, double minimumAccuracy, String logicalOperation, StrategyWeightUpdater strategy, String outFilePath) {
         if (numInputs < 2) {
             throw new IllegalArgumentException("The number of inputs should be greater than or equal to 2");
         }
 
         this.numInputs = numInputs;
         this.minimumAccuracy = minimumAccuracy;
-        this.learningRate = learningRate;
+      
 
         this.db = new DataBase(this.numInputs, logicalOperation);
-        this.ol = new OutPutLayer(this.numInputs, this.minimumAccuracy, this.learningRate,strategy, inputFilePath);
+        this.ol = new OutPutLayer(this.numInputs, this.minimumAccuracy, strategy, outFilePath);
     }
 
-    public Brain(int numInputs, double minimumAccuracy, double learningRate, String logicalOperation, StrategyWeightUpdater strategy, String outFilePath, String inputFilePath) {
+    public Brain(int numInputs, double minimumAccuracy,  String logicalOperation, StrategyWeightUpdater strategy, String outFilePath, String inputFilePath) {
         if (numInputs < 2) {
             throw new IllegalArgumentException("The number of inputs should be greater than or equal to 2");
         }
@@ -54,10 +54,10 @@ public class Brain {
         this.inputFilePath = inputFilePath;
         this.numInputs = numInputs;
         this.minimumAccuracy = minimumAccuracy;
-        this.learningRate = learningRate;
+        
 
         
-        this.ol = new OutPutLayer(this.numInputs, this.minimumAccuracy, this.learningRate, strategy, outFilePath);
+        this.ol = new OutPutLayer(this.numInputs, this.minimumAccuracy,  strategy, outFilePath);
     }
 
     /**
