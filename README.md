@@ -6,8 +6,8 @@ This project implements a single-layer perceptron network. The network is built 
 
 ## Features
 
-- Each neuron is represented as an instance of the `Neuron` class, which has attributes for input and weight.
-- The network of neurons is represented by the `NeuronLayer` class. This class manages a collection of neurons, the input data, and performs the necessary computations for neuron activation.
+- Each neuron is represented as an instance of the `InputLayer` class, which has attributes for input and weight.
+- The network of neurons is represented by the `OutPutLayer` class. This class manages a collection of neurons, the input data, and performs the necessary computations for neuron activation.
 - The network is trained through an iterative process that adjusts the weights of the neurons until a certain target accuracy is achieved.
 
 ## How to use
@@ -21,5 +21,4 @@ This project implements a single-layer perceptron network. The network is built 
 Contributions are welcome! Please feel free to open an issue or create a pull request.
 
 ## License
-
-This project is under the XYZ license. See the `LICENSE` file for more details.
+This project is under the GNU General Public License v3.0. See the LICENSE file for more details
