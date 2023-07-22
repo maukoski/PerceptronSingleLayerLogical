@@ -21,7 +21,6 @@ public class OutPutLayer {
     private double accuracyTarget;  // Minimum accuracy to stop execution.
     private boolean[] equalresults; // List of hits and misses of the neural network.
     private int epoch;  // Variable used to count the number of weight updates.
-    private String outFilePath;
 
     /**
      * Creates a new layer of neurons with a certain number of neurons.
@@ -33,12 +32,12 @@ public class OutPutLayer {
      * @throws IllegalArgumentException If the minimum accuracy is less than
      * zero.
      */
-    public OutPutLayer(int neuronCount, double accuracyTarget, StrategyWeightUpdater strategy, String outFilePath) {
+    public OutPutLayer(int neuronCount, double accuracyTarget, StrategyWeightUpdater strategy) {
         if (neuronCount <= 0) {
             throw new IllegalArgumentException("The number of neurons in a layer always must be a positive number");
         }
 
-        if (accuracyTarget < 0) {
+        if (0 > accuracyTarget && accuracyTarget > 100) {
             throw new IllegalArgumentException("The minimum accuracy of a single layer perceptron must be equal to or greater than zero");
         }
 
@@ -48,23 +47,22 @@ public class OutPutLayer {
         this.inputlayer = new LinkedList<>();
         this.strategy = strategy;
 
-        this.outFilePath = outFilePath;
-
-        // Initializing the list of neurons
-        //Refactor, changing the creation of neurons to something more elegant.
         for (int i = 0; i < neuronCount; i++) {
             this.inputlayer.add(new InputLayer());
         }
     }
 
     /**
-     * Method responsible for executing all the logic behind the network, it
-     * will run until the minimum accuracy is obtained
+     * This method is responsible for executing all the network logic. It will
+     * run until the minimum accuracy is obtained.
+     *
+     * @param db The database to be used for training.
+     * @param outFilePath The file path for storing the training results.
      */
-    public void startTraining(DataBase db) {
-        
+    public void startTraining(DataBase db, String outFilePath) {
+
         this.dataBases = db;
-        
+
         boolean flag = false;
         //while flag is false, keep executating
         while (!flag) {
@@ -107,7 +105,7 @@ public class OutPutLayer {
         System.out.println("Numero de atualizacoess de peso: " + this.epoch);
         System.out.println("Acuracia obtida pela rede: " + this.accuracyCalculation() + "%");
 
-        Writer writer = new Writer(this.outFilePath);
+        Writer writer = new Writer(outFilePath);
 
         try {
             writer.writeWeights(this.inputlayer);
@@ -116,10 +114,22 @@ public class OutPutLayer {
         }
     }
 
-    public void validation(LinkedList<DataBase> batch) {
-        this.inputlayer.get(0).setWeight(0.5);
-        this.inputlayer.get(1).setWeight(0.5);
+    /**
+     * This method validates the trained model with a batch of test data and
+     * logs the result.
+     *
+     * @param weights The weights to be used for validation.
+     * @param batch The batch of data to be validated.
+     * @param logPath The path of the file for logging the validation results.
+     */
+    public void validation(LinkedList<Double> weights, LinkedList<DataBase> batch, String logPath) {
+        String log = "";
 
+        for (int i = 0; i < weights.size(); i++) {
+            this.inputlayer.get(i).setWeight(weights.get(i));
+        }
+
+        int count = 1;
         for (DataBase db : batch) {
             this.dataBases = db;
 
@@ -133,11 +143,25 @@ public class OutPutLayer {
                 for (int i = 0; i < this.inputlayer.size(); i++) {//Access the elements of the current row of the truth table.
                     this.inputlayer.get(i).setInput(data[i]); //The current element of the truth table is set as an input to the neuron.
                 }
-                results.add(this.activation()); //Checks if there is activation and saves in the vector used to compare with the expected answers.
+                int activation = this.activation();
+                results.add(activation); //Checks if there is activation and saves in the vector used to compare with the expected answers.
             }
 
-            System.out.println("Acuracia obtida pela rede: " + this.accuracyCalculation() + "%");
+            log += "Truth Table " + Integer.valueOf(count) + "\n";
+            count++;
+            for (int i = 0; i < this.results.size(); i++) {
+                log += Integer.valueOf(this.dataBases.getConclusion()[i]) + " => " + Integer.valueOf(this.results.get(i)) + "\n";
+            }
+            log += "Accuracy achieved by the network: " + this.accuracyCalculation() + "%" + "\n" + "\n";
+            System.out.println("Accuracy achieved by the network: " + this.accuracyCalculation() + "%");
 
+        }
+
+        Writer writer = new Writer(logPath);
+        try {
+            writer.writeLog(log);
+        } catch (IOException ex) {
+            System.out.println("Error tring to wrtie the log file.");
         }
     }
 

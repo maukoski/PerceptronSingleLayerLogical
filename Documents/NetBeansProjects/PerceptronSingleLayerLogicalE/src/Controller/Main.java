@@ -20,14 +20,10 @@ public class Main {
     public static void main(String[] args) {
         StrategyWeightUpdater strategy = new StrategyWeightUpdater(1);
         strategy.setLearningRate(0.1);
-        strategy.setMomentum(0.1);
+        strategy.setMomentum(0.9);
+        Brain brain = new Brain(2, 100, "AND", strategy);
+        brain.startProcess(2, "C:\\Users\\William\\Desktop\\Weight.txt","C:\\Users\\William\\Desktop\\Validation Batch","C:\\Users\\William\\Desktop\\log.txt");
         
-        Brain brain = new Brain(2, 100, "or",strategy,"C:\\Users\\William\\Desktop\\Weights.txt","C:\\Users\\William\\Desktop\\Validation Batch");
-        //Brain brain = new Brain(2, 100, "and", strategy, "C:\\Users\\William\\Desktop\\Weight.txt");
-        
-        brain.startProcess(2);
-        
-        //brain.printTable();
 
     }
 

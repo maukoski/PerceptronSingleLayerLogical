@@ -6,75 +6,74 @@ package Viewer;
 
 import Model.DataBase;
 import Model.OutPutLayer;
-
+import java.io.FileNotFoundException;
 
 /**
+ * This class serves as a façade, providing a unified interface between the
+ * system and the neural network.
  *
- * @author William
+ * The Brain class simplifies the interface of the underlying system, acting as
+ * a point of access to the neural network. It encapsulates the complexity of
+ * the system, making it easier to interact with the neural network without
+ * needing to understand the inner workings. It manages the neural network's
+ * operations including learning, updating weights, reading and writing from
+ * databases, and more.
+ *
+ * @author William maukoski
+ * @version 1.0
  */
 public class Brain {
 
-    private int numInputs;
     private DataBase db;
     private OutPutLayer ol;
-    private double minimumAccuracy;
-   
-    private String inputFilePath;
 
     /**
-     * Creates a new layer of neurons with a certain number of neurons.
+     *
      *
      * @param numInputs Number of inputs is used both to define the number of
      * premises and the number of inputs in the neuron.
      * @param minimumAccuracy Minimum accuracy to stop execution.
-     
+     *
      * @param logicalOperation The logical operation being worked on.
-     * @param outFilePath the path to the outPut result file.
      * @throws IllegalArgumentException If numInputs is less than 2. zero.
      *
      */
-    public Brain(int numInputs, double minimumAccuracy, String logicalOperation, StrategyWeightUpdater strategy, String outFilePath) {
+    public Brain(int numInputs, double minimumAccuracy, String logicalOperation, StrategyWeightUpdater strategy) {
         if (numInputs < 2) {
             throw new IllegalArgumentException("The number of inputs should be greater than or equal to 2");
         }
 
-        this.numInputs = numInputs;
-        this.minimumAccuracy = minimumAccuracy;
-      
-
-        this.db = new DataBase(this.numInputs, logicalOperation);
-        this.ol = new OutPutLayer(this.numInputs, this.minimumAccuracy, strategy, outFilePath);
-    }
-
-    public Brain(int numInputs, double minimumAccuracy,  String logicalOperation, StrategyWeightUpdater strategy, String outFilePath, String inputFilePath) {
-        if (numInputs < 2) {
-            throw new IllegalArgumentException("The number of inputs should be greater than or equal to 2");
-        }
-
-        this.inputFilePath = inputFilePath;
-        this.numInputs = numInputs;
-        this.minimumAccuracy = minimumAccuracy;
-        
-
-        
-        this.ol = new OutPutLayer(this.numInputs, this.minimumAccuracy,  strategy, outFilePath);
+        this.db = new DataBase(numInputs, logicalOperation);
+        this.db.fillValues();
+        this.db.fillConclusion();
+        this.ol = new OutPutLayer(numInputs, minimumAccuracy, strategy);
     }
 
     /**
      * Method responsible for starting the processing.
      */
-    public void startProcess(int option) {
-        if (option == 1) {
-            this.ol.startTraining(this.db);
+    public void startProcess(int option, String... args) {
+
+        if (option == 1 && args.length == 1) {
+            String outPutFilePath = args[0];
+            this.ol.startTraining(this.db, outPutFilePath);
         }
-        if(option == 2){
-            this.ol.validation(new Reader(inputFilePath, numInputs).readDatabasesFromDirectory(inputFilePath));
+        if (option == 2 && args.length == 3) {
+
+            String weightFilePath = args[0];
+            String trainingDirectoryPath = args[1];
+            String logPath = args[2];
+
+            Reader reader = new Reader();
+
+            this.ol.validation(reader.readWeight(weightFilePath), reader.readDatabasesFromDirectory(trainingDirectoryPath), logPath);
+
         }
 
     }
 
     /**
-     * Method that prints the truth table.
+     * Method that prints the premisses.
      */
     public void printTable() {
         this.db.printTable();
@@ -84,6 +83,6 @@ public class Brain {
      * Method that prints only the conclusions of the truth table.
      */
     public void printConclusion() {
-        this.db.getConclusion();
+        this.db.printConclusion();
     }
 }

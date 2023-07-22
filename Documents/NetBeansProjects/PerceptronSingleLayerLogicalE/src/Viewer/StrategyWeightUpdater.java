@@ -4,7 +4,8 @@ package Viewer;
  * The StrategyWeightUpdater class acts as a container for hyperparameters used 
  * in the weight update strategies of a neural network.
  *
- * @author William
+ * @author William maukoski
+ * @version 1.1
  */
 public class StrategyWeightUpdater {
     

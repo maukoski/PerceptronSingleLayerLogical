@@ -6,32 +6,50 @@ package Model;
 
 /**
  *
- * @author William
+ * The DataBase class represents a dataset used for training the neural network.
+ * It contains the input data and their corresponding expected outcomes
+ * (conclusion). It also provides functionality to print the dataset and fill it
+ * according to different logical operations.
+ *
+ * @author William maukoski
+ * @version 1.0
  */
 public class DataBase {
 
     private int[][] data;
     private int[] conclusion;
     private String logicalOperation;
-    
-    
-//Refatorar esta  classe
+
+    /**
+     * Constructor for creating a new database. The data array and conclusion
+     * array will be populated based on the provided premise count and logical
+     * operation.
+     *
+     * @param premiseCount The number of premises.
+     * @param logicalOperation The logical operation used to fill the values.
+     */
     public DataBase(int premiseCount, String logicalOperation) {
         this.data = new int[(int) Math.pow(2, premiseCount)][premiseCount];
         this.conclusion = new int[(int) Math.pow(2, premiseCount)];
         this.logicalOperation = logicalOperation;
 
-        this.fillValues();
-        this.fillConclusion(this.logicalOperation);
-    }
-    
-    public DataBase(int[][] data, int[] conclusion, String logicalOperation){
-        this.data = data;
-        this.conclusion = conclusion;
-        this.logicalOperation = logicalOperation;
-        
     }
 
+    /**
+     * Constructor for creating a new database with predefined data and
+     * conclusion arrays.
+     *
+     * @param data The 2D array containing the input data.
+     * @param conclusion The array containing the expected outcomes.
+     */
+    public DataBase(int[][] data, int[] conclusion) {
+        this.data = data;
+        this.conclusion = conclusion;
+    }
+
+    /**
+     * Prints the data array to the console.
+     */
     public void printData() {
         for (int i = 0; i < data.length; i++) {
             System.out.print("Linha" + i + ": ");
@@ -42,6 +60,9 @@ public class DataBase {
         }
     }
 
+    /**
+     * Prints the conclusion array to the console.
+     */
     public void printConclusion() {
         int i = 0;
         for (int conclusion : this.conclusion) {
@@ -50,6 +71,9 @@ public class DataBase {
         }
     }
 
+    /**
+     * Prints the full dataset (data array and conclusion array) to the console.
+     */
     public void printTable() {
         System.out.print("Truth Table " + this.logicalOperation.toUpperCase() + "\n");
 
@@ -66,15 +90,28 @@ public class DataBase {
         }
     }
 
+    /**
+     * Retrieves the data array.
+     *
+     * @return the data array.
+     */
     public int[][] getData() {
         return data;
     }
 
+    /**
+     * Retrieves the conclusion array.
+     *
+     * @return the conclusion array.
+     */
     public int[] getConclusion() {
         return conclusion;
     }
 
-    private void fillValues() {
+    /**
+     * Fills the data array based on the number of premises.
+     */
+    public void fillValues() {
         int numRows = data.length;
         int numCols = data[0].length;
 
@@ -86,15 +123,17 @@ public class DataBase {
         }
     }
 
-    private void fillConclusion(String logicalOperation) {
-        if (logicalOperation.toUpperCase().equals("OR")) {
+    /**
+     * Fills the conclusion array based on the logical operation.
+     */
+    public void fillConclusion() {
+        if (this.logicalOperation.toUpperCase().equals("OR")) {
             for (int i = 1; i < this.conclusion.length; i++) {
                 this.conclusion[i] = 1;
             }
         }
-        if (logicalOperation.toUpperCase().equals("AND")) {
+        if (this.logicalOperation.toUpperCase().equals("AND")) {
             this.conclusion[this.conclusion.length - 1] = 1;
         }
-
     }
 }

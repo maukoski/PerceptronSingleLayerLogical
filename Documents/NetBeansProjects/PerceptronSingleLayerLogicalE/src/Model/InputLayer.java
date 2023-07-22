@@ -16,7 +16,7 @@ import Viewer.StrategyWeightUpdater;
  */
 public class InputLayer {
 
-    private double input;
+    private int input;
     private double weight;
     private double prevWeightUpdate;
     private double gradientSum; //a atribute to keep track of the sum of squares of gradients.
@@ -56,7 +56,7 @@ public class InputLayer {
      *
      * @param input Input from the data base.
      */
-    public void setInput(double input) {
+    public void setInput(int input) {
         this.input = input;
     }
 

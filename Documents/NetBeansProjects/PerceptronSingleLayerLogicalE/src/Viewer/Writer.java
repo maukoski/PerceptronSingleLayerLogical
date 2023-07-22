@@ -34,7 +34,7 @@ public class Writer {
      * @throws IOException If an I/O error occurs.
      */
     public void writeWeights(LinkedList<InputLayer> inputs) throws IOException {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(this.filePath))) {
             for (InputLayer input : inputs) {
                 writer.write(Double.toString(input.getWeight()));
                 writer.newLine();
@@ -42,4 +42,16 @@ public class Writer {
         }
     }
 
+    /**
+     * Writes a log message to the file. 
+     *
+     * @param log The log message to be written to the file.
+     * @throws IOException If an I/O error occurs.
+     */
+    public void writeLog(String log) throws IOException {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(this.filePath))) {
+            writer.write(log);
+            writer.newLine();
+        }
+    }
 }
